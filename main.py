@@ -89,7 +89,7 @@ class Comments(db.Model):
     # Create bidirectional relationship with BlogPost
     post = relationship("BlogPost", back_populates="post_comments")
 
-db.create_all()
+# db.create_all()
 
 
 ##CREATE @admin_only decorator
