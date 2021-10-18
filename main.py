@@ -42,6 +42,7 @@ gravatar = Gravatar(
     base_url=None
 )
 
+
 ##CONFIGURE TABLES
 class BlogPost(db.Model):
     # Use __tablename__ to decide your sheet name in the db.
@@ -96,6 +97,7 @@ class Comments(db.Model):
 # *args, **kwargs must need attach in () , otherwise will come out Type error that need 2 parameter.
 def admin_only(function):
     # why need this wraps decorator??  Remember first.
+    # Because if no this wraps , will come out error.
     @wraps(function)
     def wrapped_function(*args, **kwargs):
         if current_user.id != 1:
@@ -228,8 +230,8 @@ def edit_post(post_id):
         post.body = edit_form.body.data
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
-
-    return render_template("make-post.html", form=edit_form, logged_in=current_user.is_authenticated)
+    else:
+        return render_template("make-post.html", form=edit_form, logged_in=current_user.is_authenticated)
 
 
 @app.route("/delete/<int:post_id>")
